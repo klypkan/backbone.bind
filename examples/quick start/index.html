@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Backbone.bind.js quick start example</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>Backbone.bind.js quick start example</h1>
+        <p>
+            <strong>Person items</strong>
+        </p>
+        <table id="person-items" class="table-data">
+            <tr>
+                <th>
+                    first name
+                </th>
+                <th>
+                    color
+                </th>
+                <th>
+                    married
+                </th>
+                <th>
+                    employed
+                </th>
+                <th></th>
+            </tr>
+        </table>
+        <fieldset id="person-edit" class="person-edit">
+            <legend>Person edit</legend>
+            <table class="table-form">
+                <tr>
+                    <td class="form-label">
+                        id:
+                    </td>
+                    <td>
+                        <input name="id" type="text" readonly class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-label">
+                        first name:
+                    </td>
+                    <td>
+                        <input name="firstName" type="text" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-label">
+                        color:
+                    </td>
+                    <td>
+                        <select name="color" class="form-control">
+                            <option value="Yellow">Yellow</option>
+                            <option value="Pink">Pink</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-label">
+                        married:
+                    </td>
+                    <td>
+                        <input type="checkbox" name="married" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-label">
+                        employed:
+                    </td>
+                    <td>
+                        <input type="radio" name="employed" value="Yes" />Yes
+
+                        <input type="radio" name="employed" value="No" />No
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right">
+                        <input id="btnSave" type="button" value="Save" class="btn" />
+                        <input id="btnReset" type="button" value="Reset" class="btn" />
+                        <input id="btnCancel" type="button" value="Cancel" class="btn" />
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+    <script src="../jquery.js"></script>
+    <script src="../underscore.js"></script>
+    <script src="../backbone.js"></script>
+    <script src="../backbone.localStorage.js"></script>
+    <script src="../../backbone.bind.js"></script>
+    <script src="app.js"></script>
+    <!-- Templates -->
+    <script type="text/template" id="item-template">
+        <td><%= firstName %></td>
+        <td><%= color %></td>
+        <td><%= married %></td>
+        <td><%= employed %></td>
+        <td><span class="btn-link btnEdit">Edit</span></td>
+    </script>
+</body>
+</html>

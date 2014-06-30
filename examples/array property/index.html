@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Backbone.bind.js array property example</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>Backbone.bind.js array property example</h1>
+        <p>
+            <strong>Person items</strong>
+        </p>
+        <div id="person-items">
+            <ul class="items-toolbox">
+                <li>
+                    <input id="add-person" type="button" value="add" class="btn" />
+                </li>
+                <li>
+                    <input id="del-person" type="button" value="del" class="btn" />
+                </li>
+            </ul>
+            <table class="table-data">
+                <tr>
+                    <th>
+                    </th>
+                    <th>
+                        first name
+                    </th>
+                    <th>
+                        color
+                    </th>
+                    <th>
+                        married
+                    </th>
+                    <th>
+                        employed
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </table>
+        </div>
+        <fieldset id="person-edit" class="person-edit">
+            <legend>Person edit</legend>
+            <p class="model-errors">
+            </p>
+            <table class="table-form">
+                <tr>
+                    <td class="form-label">
+                        id:
+                    </td>
+                    <td>
+                        <input name="id" type="text" readonly class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-label">
+                        first name:
+                    </td>
+                    <td>
+                        <input name="firstName" type="text" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-label">
+                        color:
+                    </td>
+                    <td>
+                        <select name="color" class="form-control">
+                            <option value="Yellow">Yellow</option>
+                            <option value="Pink">Pink</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-label">
+                        married:
+                    </td>
+                    <td>
+                        <input type="checkbox" name="married" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-label">
+                        employed:
+                    </td>
+                    <td>
+                        <input type="radio" name="employed" value="Yes" />Yes
+                        <input type="radio" name="employed" value="No" />No
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <p><strong>pets</strong></p>
+                        <ul class="items-toolbox">
+                            <li>
+                                <input id="add" type="button" value="add" class="btn" />
+                            </li>
+                            <li>
+                                <input id="del" type="button" value="del" class="btn" />
+                            </li>
+                        </ul>
+                        <table id="pets" class="table-data table-data-edit">
+                            <tr>
+                                <th>
+                                </th>
+                                <th>
+                                    name
+                                </th>
+                                <th>
+                                    type
+                                </th>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right">
+                        <input id="btnSave" type="button" value="Save" class="btn" />
+                        <input id="btnCancel" type="button" value="Cancel" class="btn" />
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+    <script src="../jquery.js"></script>
+    <script src="../underscore.js"></script>
+    <script src="../backbone.js"></script>
+    <script src="../backbone.localStorage.js"></script>
+    <script src="../../backbone.bind.js"></script>
+    <script src="app.js"></script>
+    <!-- Templates -->
+    <script type="text/template" id="item-template">
+        <td><input type="checkbox" class="item-selector" /><input type="hidden" class="id" value="<%= id %>" /></td>
+        <td><%= firstName %></td>
+        <td><%= color %></td>
+        <td><%= married %></td>
+        <td><%= employed %></td>
+        <td><span class="btn-link btnEdit">Edit</span></td>
+    </script>
+    <script type="text/template" id="pet-item-template">
+        <tr class="pet-item">
+            <td>
+                <input type="hidden" value="<%= itemIndex %>" class="item-index" />
+                <input type="checkbox" class="item-selector" />
+            </td>
+            <td><input name="pets[<%= itemIndex %>].name" type="text" class="form-control" /></td>
+            <td>
+                <select name="pets[<%= itemIndex %>].type" class="form-control">
+                    <option value="Cat">Cat</option>
+                    <option value="Dog">Dog</option>
+                </select>
+            </td>
+        <tr>
+    </script>
+</body>
+</html>
