@@ -1,4 +1,4 @@
-//     Backbone.bind.js 1.0
+//     Backbone.bind.js 1.0.1
 //     For all details and documentation:
 //     https://github.com/klypkan/backbone.bind
 
@@ -17,14 +17,9 @@
         var eventsAttr = this.bindingOptions.eventsAttr;
         var defaultElEvents = "change";
         var elEvents = null;
-        var modelEvents = "change";
         var el = null;
         var propName = null;
         var viewContext = this;
-
-        if (this.bindingOptions.observeModel) {
-            this.stopListening(this.model, modelEvents);
-        }
 
         this.$el.find('[' + propNameAttr + ']').each(function (index) {
             el = $(this);
@@ -36,7 +31,6 @@
 
             elEvents = el.attr(eventsAttr);
             elEvents = elEvents || defaultElEvents;
-            el.off(elEvents);
             el.on(elEvents, { propName: propName, el: el }, function (event) {
                 var proxy = $.proxy(getElVal, viewContext, event.data.el, event.data.propName);
                 var elVal = proxy();
@@ -46,28 +40,37 @@
         });
 
         if (this.bindingOptions.observeModel) {
-            this.listenTo(this.model, modelEvents, function () {
-                var changedAttributes = this.model.changedAttributes();
-                for (var propName in changedAttributes) {
-                    this.$el.find('[' + propNameAttr + '="' + propName + '"]').each(function (index) {
-                        el = $(this);
-                        var proxy = $.proxy(getElVal, viewContext, el, propName);
-                        var elVal = proxy();
-                        if (elVal != changedAttributes[propName]) {
-                            proxy = $.proxy(setElVal, viewContext, el, changedAttributes[propName]);
-                            proxy();
-                        }
-                    });
+            this.model.on("change", modelChangeHandler, this);
+        }
+    }
+    function modelChangeHandler() {
+        var changedAttributes = this.model.changedAttributes();
+        var propNameAttr = this.bindingOptions.propNameAttr;
+        var viewContext = this;
+        for (var propName in changedAttributes) {
+            this.$el.find('[' + propNameAttr + '="' + propName + '"]').each(function (index) {
+                el = $(this);
+                var proxy = $.proxy(getElVal, viewContext, el, propName);
+                var elVal = proxy();
+                if (elVal != changedAttributes[propName]) {
+                    proxy = $.proxy(setElVal, viewContext, el, changedAttributes[propName]);
+                    proxy();
                 }
             });
         }
     }
 
     Backbone.View.prototype.unbind = function () {
-        var propNameAttr = this.bindingOptions.propNameAttr;
-        this.$el.find('[' + propNameAttr + ']').each(function (index) {
-            $(this).off();
-        });
+        if (this.bindingOptions) {
+            if (this.bindingOptions.observeModel) {
+                this.model.off("change", modelChangeHandler, this);
+            }
+
+            var propNameAttr = this.bindingOptions.propNameAttr;
+            this.$el.find('[' + propNameAttr + ']').each(function (index) {
+                $(this).off();
+            });
+        }
     }
 
     function setElVal(el, propVal) {

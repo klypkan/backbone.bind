@@ -52,7 +52,7 @@ $(function () {
         },
 
         initialize: function () {
-            this.listenTo(this.model, 'sync', this.render);
+            this.model.on('sync', this.render, this);
         },
 
         template: _.template($('#item-template').html()),
@@ -63,10 +63,16 @@ $(function () {
         },
 
         editPerson: function () {
-            if (personEditView != null) {
-                personEditView.undelegateEvents();
-            }
+            this.unbind();
             personEditView = new PersonEditView({ model: this.model });
+        },
+
+        unbind: function () {
+            if (personEditView) {
+                this.model.off(null, null, personEditView);
+                personEditView.unbind();
+                personEditView.off();
+            }
         }
     });
 
@@ -139,7 +145,7 @@ $(function () {
         el: $("#person-items"),
 
         initialize: function () {
-            this.listenTo(persons, 'reset', this.addAll);
+            persons.on('reset', this.addAll, this);
             persons.fetch({ reset: true });
         },
 
