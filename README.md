@@ -1,6 +1,6 @@
 # Backbone.bind 1.0
 
-Model binding for <a href="http://backbonejs.org/" target="_blank">Backbone</a>.
+Two-way binding between View and Model for <a href="http://backbonejs.org/" target="_blank">Backbone</a>.
 
 ## Quick start
 
@@ -30,7 +30,7 @@ var someView = Backbone.View.extend({
 ```
 
 ## API Documentation
-**bind([options])**
+**bind([options])** - to initial binding between View and Model.
 
 **propNameAttr** - a name HTML attribute with a value containing name of a model property, default value is 'name'.
 
@@ -44,4 +44,4 @@ var someView = Backbone.View.extend({
 this.bind({ propNameAttr: 'data-bind-prop-name', observeModel: false });
 ```
 
-
+**unbind()** - to cancel binding between View and Model.
