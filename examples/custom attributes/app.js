@@ -103,6 +103,16 @@ $(function () {
             }
         },
 
+        firstNameHandler: function (event) {
+            if (event.type == "setElVal") {
+                event.data.el.val(event.data.propVal);
+            }
+            else if (event.type == "getElVal")
+            {
+                return event.data.el.val();
+            }
+        },
+
         showErrors: function (errors) {
             var attrName = "data-bind-prop-name";
             var propClassError = "input-validation-error";
